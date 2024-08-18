@@ -1,5 +1,5 @@
 /******w**************
-    
+
     Assignment 4 Javascript
     Name: Mckenzie Cook
     Date: 02.24.2024
@@ -9,26 +9,26 @@
 *********************/
 
 /*
-This JavaScript file makes a dynamic map of Winnipeg's parks and open spaces using Leaflet API and AJAX GeoJSON data. 
-It fetches park information from the "City of Winnipeg Parks and Open Spaces" GeoJson data and displays it on the map. 
-The script allows users to search for parks by name and see detailed information when hovering over park areas. 
+This JavaScript file makes a dynamic map of Winnipeg's parks and open spaces using Leaflet API and AJAX GeoJSON data.
+It fetches park information from the "City of Winnipeg Parks and Open Spaces" GeoJson data and displays it on the map.
+The script allows users to search for parks by name and see detailed information when hovering over park areas.
 It also lets users filter parks by electoral ward, district, or neighborhood, by updating the map.
 When a park is hovered over it will update the text content in the search bar.
-The search bar will provide more information on the park using a AJAX fetch. limited to 100 and ordered alphabetically. 
+The search bar will provide more information on the park using a AJAX fetch. limited to 100 and ordered alphabetically.
 */
 
 /*
-I have used leaflets "Interactive Choropleth Map" tutorial for referance for this map. 
+I have used leaflets "Interactive Choropleth Map" tutorial for referance for this map.
 Which can be found here "https://leafletjs.com/examples/choropleth/".
 */
 
 
 // Check if Leaflet library is available
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // geoJson defalut url 
+
+    // geoJson defalut url
     var defaultUrlString = 'https://data.winnipeg.ca/resource/tx3d-pfxq.geojson?' +
-        '$limit=2000'; // there is currently only 1339 parks/open spaces in the geoJson dataset 
+        '$limit=2000'; // there is currently only 1339 parks/open spaces in the geoJson dataset
     var url = encodeURI(defaultUrlString);
 
     // Initialize the map
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(function(geojsonData) {
                 // Iterate each "feature" in the GeoJSON data
                 geojsonData.features.forEach(feature => {
-                    const coordinates = feature.properties.polygon.coordinates;
+                    const coordinates = feature.properties.geometry.coordinates;
                     const area = feature.properties.area_in_hectares;
                     const properties = feature.properties;
 
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const layer = L.geoJSON({
                         "type": "Feature",
                         "geometry": {
-                            "type": feature.properties.polygon.type,
+                            "type": feature.properties.geometry.type,
                             "coordinates": coordinates
                         },
                         "properties": properties
@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const electoralWardOptions = electoralWards.map(ward => `<option value="${ward}">${ward.charAt(0) + ward.slice(1).toLowerCase()}</option>`).join("");
 
             const districtOptions = districts.map(district => `<option value="${district}">${district.charAt(0) + district.slice(1).toLowerCase()}</option>`).join("");
- 
+
             const neighborhoodOptions = neighborhoods.map(neighborhood => `<option value="${neighborhood}">${neighborhood.charAt(0).toUpperCase() + neighborhood.slice(1).toLowerCase()}</option>`).join("");
 
             // Append select options to select elements
@@ -188,13 +188,13 @@ document.addEventListener('DOMContentLoaded', function() {
         var selectURL;
 
         if (selectedOption === 'all') {
-            // there is currently only 1339 parks/open spaces in the geoJson dataset 
+            // there is currently only 1339 parks/open spaces in the geoJson dataset
             selectURL = url;
         } else {
             const selectValue = document.getElementById(selectedOption).value;
 
             if (selectedOption === 'electoral_ward' || selectedOption === 'district' || selectedOption === 'neighbourhood') {
-            // Construct the URL 
+            // Construct the URL
                 selectURL = 'https://data.winnipeg.ca/resource/tx3d-pfxq.geojson?' +
                 '$where=' + selectedOption + "='" + selectValue + "'";
             }
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // control that shows state info on hover
     const info = L.control();
 
-    // create park info window on add 
+    // create park info window on add
     info.onAdd = function(map) {
 
         this._div = L.DomUtil.create('div', 'info');
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.value = parkName; // Add value to textbox
     }
 
-    //zoom on park click 
+    //zoom on park click
     function zoomToFeature(e) {
         map.fitBounds(e.target.getBounds());
     }
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
         position: 'bottomleft'
     });
 
-    // populate the scale legend based on size(ha), from low to high. Add color to legend. 
+    // populate the scale legend based on size(ha), from low to high. Add color to legend.
     legend.onAdd = function(map) {
         const div = L.DomUtil.create('div', 'info legend');
         const grades = [0, 0.1, 2.5, 5, 10, 15, 25, 50, 75, 100, 150, 200];
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Gets park data based on a "search query" param.
     parkUrl query is case insensitive.
     Constructs the URL with the search query, orders the results by park name,
-    and limits the number of results to 100. 
+    and limits the number of results to 100.
     Parses the response as JSON and returns the array of park feature objects.
     If an error occurs during the fetch request, logs the error to the console.
     */
@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return fetch(searchURL)
             .then(function(result) {
-                return result.json(); 
+                return result.json();
             })
             .then(function(retrieved) {
                 return retrieved.features; // Return the array of feature objects
@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
     This function is for appending park data to the HTML.
     It populates the table with park information based on the provided array of park objects.
     If no parks are found, it displays a message indicating that no parks were found.
-    Otherwise, it iterates over the park data and creates table rows with park properties 
+    Otherwise, it iterates over the park data and creates table rows with park properties
     in the desired order.
     */
 
