@@ -64,13 +64,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Fetch GeoJSON data to populate map
         fetch(url)
-            .then(function(response) {
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
                 return response.json();
             })
             .then(function(geojsonData) {
                 // Iterate each "feature" in the GeoJSON data
                 geojsonData.features.forEach(feature => {
-                    const coordinates = feature.properties.geometry.coordinates;
+                    const coordinates = feature.geometry.coordinates;
                     const area = feature.properties.area_in_hectares;
                     const properties = feature.properties;
 
@@ -78,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const layer = L.geoJSON({
                         "type": "Feature",
                         "geometry": {
-                            "type": feature.properties.geometry.type,
+                            "type": feature.geometry.type,
                             "coordinates": coordinates
                         },
                         "properties": properties
@@ -103,11 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             });
                         }
                     }).addTo(map);
-
                 });
+            })
+            .catch(error => {
+                console.error('Error fetching GeoJSON data:', error);
             });
     }
-
     // Retrieve complete park info on page load.
     getGeoJsonMap(url);
 
