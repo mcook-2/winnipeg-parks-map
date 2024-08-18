@@ -1,0 +1,80 @@
+<!-------w------------
+
+    Assignment 4
+    Name: Mckenzie Cook
+    Date: 02.24.2024
+    Description: Dynamic Winnipeg Park & Open Space Map HTML
+
+	--------------------->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Park Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Dynamic Winnipeg Park & Open Space Map</h1>
+      <div id="radidSelectDiv">
+        <label>
+          <input type="radio" name="selected_option" value="electoral_ward" checked> Electoral Ward: </label>
+        <select id="electoral_ward">
+          <!-- Options for Electoral Ward -->
+        </select>
+        <label>
+          <input type="radio" name="selected_option" value="district"> District: </label>
+        <select id="district">
+          <!-- Options for District -->
+        </select>
+        <label>
+          <input type="radio" name="selected_option" value="neighbourhood"> Neighbourhood: </label>
+        <select id="neighbourhood">
+          <!-- Options for Neighbourhood -->
+        </select>
+        <label>
+          <input type="radio" name="selected_option" value="all"> Show All </label>
+        <button id="submit_radio">Submit</button>
+      </div>
+      <div id="map"></div>
+      <form id="form" action="script.js" method="post">
+        <p id="hoverExplanation">Hover over a park to automatically add it to the search field.</p>
+        <label for="search">Search Park:</label>
+        <input type="text" id="search" name="search">
+        <button type="submit">Submit</button>
+        <p id="parkCount"></p>
+      </form>
+      <div id="parkList">
+        <table class="park-table" id="parkTable">
+          <thead>
+            <tr>
+              <th>Park id</th>
+              <th>Park name</th>
+              <th>Location Description</th>
+              <th>Classification Type</th>
+              <th>Linear Park System</th>
+              <th>Park Category</th>
+              <th>District</th>
+              <th>Electoral Ward</th>
+              <th>Neighbourhood</th>
+              <th>CCA</th>
+              <th>Area in Hectares</th>
+              <th>Land Area in Hectares</th>
+              <th>Water Area in Hectares</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Park data will be inserted here dynamically -->
+          </tbody>
+        </table>
+      </div>
+      <div id="bottomDiv">
+        <p> 2024 RRC. ~ M Cook ~</p>
+      </div>
+    </div>
+  </body>
+</html>

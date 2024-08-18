@@ -1,0 +1,170 @@
+/******w**************
+    
+    Assignment 4 Stylesheet
+    Name: Mckenzie Cook
+    Date: 02.24.2024
+    Description: Dynamic Winnipeg Park & Open Space Map CSS (Park Ranger styles)
+
+*********************/
+
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    margin: 0;
+    padding: 10px;
+    background: rgba(211, 211, 211, 0.2);
+
+}
+
+#container {
+    border: 2px solid #000;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    padding: 5px;
+}
+
+#radidSelectDiv {
+    width: 1300px;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: -20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+select {
+    font-size: 16px;
+    padding: 8px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+
+h1,
+label {
+    background-color: #6d8203;
+    color: #ffd700;
+    padding: 8px;
+}
+
+label,
+select,
+input[type="text"] {
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+#form {
+    text-align: center;
+    margin: 100px;
+}
+
+#search {
+    font-size: 16px;
+    padding: 8px 12px;
+    width: 500px;
+}
+
+#form button[type="submit"],
+#submit_radio {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#form button[type="submit"]:hover,
+#submit_radio:hover {
+    background-color: #45a049;
+}
+
+
+#map {
+    border: 2px solid;
+    width: 1300px;
+    height: 600px;
+    margin: auto;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.9);
+}
+
+
+.info.leaflet-control {
+    background-color: rgba(250, 249, 248, 0.8);
+    padding: 5px;
+    border: 2px solid;
+    color: #000;
+    border-radius: 10px;
+}
+
+.info.leaflet-control h4 {
+
+    padding: 0px;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+
+.park-data {
+    margin-bottom: 20px;
+}
+
+.park-data input[type="text"],
+.park-data button {
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-right: 10px;
+}
+
+.park-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.park-table th,
+.park-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.sort-arrow {
+    margin-left: 5px;
+}
+
+
+.park-table th {
+    background-color: #6d8203;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.park-table tbody tr:nth-child(even) {
+    background-color: #daa45c;
+}
+
+.park-table tbody tr:hover {
+    background-color: #b2b356;
+}
+
+#bottomDiv {
+    text-align: center;
+    margin: auto;
+    color: #daa520;
+}
